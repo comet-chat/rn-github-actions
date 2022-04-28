@@ -4,6 +4,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  PROJECT_NAME: RNGithubAction
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -34,14 +37,15 @@ jobs:
         run: npx react-native init RNGithubAction
         
       - name: Make Gradlew Executable
-        run: cd RNGithubAction && cd android && chmod +x ./gradlew
+        run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
         
       - name: Generate App APK
         run: |
-          cd RNGithubAction && cd android && ./gradlew assembleRelease --no-daemon
-
-#       # Runs a set of commands using the runners shell
-#       - name: Run a multi-line script
-#         run: |
-#           echo Add other actions to build,
-#           echo test, and deploy your project.
+          cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          # Artifact name
+          name: 'build'
+          path: '$PROJECT_NAME/android/app/build/outputs/apk/release/app-release.apk'
