@@ -17,9 +17,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rn_version: ['0.68.x', '0.67.x', '0.66.x', '0.65.x', '0.64.x', '0.63.x', '0.62.x', '0.61.x', '0.60.x']
+        rn_version: ['0.67.x', '0.66.x', '0.65.x', '0.64.x', '0.63.x', '0.62.x', '0.61.x', '0.60.x']
         node_version: ['18.x', '16.x', '14.x', '12.x']
-        jdk_version: ['11']
+        jdk_version: ['8']
+        include:
+          - rn_version: '0.68.x'
+            node_version: '18.x'
+            jdk_version: '11'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -50,9 +54,9 @@ jobs:
         run: |
           cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
           
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
-        with:
-          # Artifact name
-          name: 'build'
-          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
+#       - name: Upload a Build Artifact
+#         uses: actions/upload-artifact@v3.0.0
+#         with:
+#           # Artifact name
+#           name: 'build'
+#           path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
