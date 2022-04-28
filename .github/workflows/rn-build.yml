@@ -48,4 +48,4 @@ jobs:
         with:
           # Artifact name
           name: 'build'
-          path: '$PROJECT_NAME/android/app/build/outputs/apk/release/app-release.apk'
+          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
