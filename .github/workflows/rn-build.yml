@@ -15,8 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     
     strategy:
+      fail-fast: false
       matrix:
-        rn_version: ['0.68.*', '0.67.*', '0.66.*', '0.65.*', '0.64.*', '0.63.*', '0.62.*', '0.61.*', '0.60.*']
+        rn_version: ['0.68.x', '0.67.x', '0.66.x', '0.65.x', '0.64.x', '0.63.x', '0.62.x', '0.61.x', '0.60.x']
+        node_version: ['18.x', '16.x', '14.x', '12.x', '10.x']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
