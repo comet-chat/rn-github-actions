@@ -19,6 +19,7 @@ jobs:
       matrix:
         rn_version: ['0.68.x', '0.67.x', '0.66.x', '0.65.x', '0.64.x', '0.63.x', '0.62.x', '0.61.x', '0.60.x']
         node_version: ['18.x', '16.x', '14.x', '12.x', '10.x']
+        jdk_version: ['8', '11']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,13 +28,13 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
-          node-version: 18.x
+          node-version: ${{ matrix.node_version }}
           
       - name: Setup Java JDK
         uses: actions/setup-java@v3.2.0
         with:
           # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
-          java-version: '11'
+          java-version: ${{ matrix.jdk_version }}
           # Java distribution. See the list of supported distributions in README file
           distribution: 'zulu'
       
@@ -47,6 +48,7 @@ jobs:
         
       - name: Generate App APK
         run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
           cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
           
       - name: Upload a Build Artifact
