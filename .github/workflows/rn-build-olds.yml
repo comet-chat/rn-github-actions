@@ -12,13 +12,13 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     
     strategy:
       fail-fast: false
       matrix:
-        rn_version: ['0.63.x', '0.62.x', '0.61.x', '0.60.x']
-        node_version: ['14.x', '12.x']
+        rn_version: ['0.63.x']
+        node_version: ['14.x']
         jdk_version: ['8']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -33,7 +33,7 @@ jobs:
       - name: Setup Java JDK   
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: ${{ matrix.jdk_version }}
       
 
