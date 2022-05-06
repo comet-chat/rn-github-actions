@@ -32,9 +32,9 @@ jobs:
       - name: Generate App APK
         run: cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
           
-#       - name: Upload a Build Artifact
-#         uses: actions/upload-artifact@v3.0.0
-#         with:
-#           # Artifact name
-#           name: 'build'
-#           path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          # Artifact name
+          name: 'build'
+          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
