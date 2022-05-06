@@ -1,0 +1,54 @@
+name: RN Github Action
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  PROJECT_NAME: RNGithubAction
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        rn_version: ['0.63.x', '0.62.x', '0.61.x', '0.60.x']
+        node_version: ['14.x', '12.x']
+        jdk_version: ['8']
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.1.1
+        with:
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: ${{ matrix.node_version }}
+          
+      - name: Setup Java JDK   
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.jdk_version }}
+      
+
+      # Runs a single command using the runners shell
+      - name: Create new react native project
+        run: npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
+        
+      - name: Make Gradlew Executable
+        run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
+        
+      - name: Generate App APK
+        run: cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
+          
+#       - name: Upload a Build Artifact
+#         uses: actions/upload-artifact@v3.0.0
+#         with:
+#           # Artifact name
+#           name: 'build'
+#           path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
