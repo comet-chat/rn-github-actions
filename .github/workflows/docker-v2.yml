@@ -1,4 +1,4 @@
-name: RN Github Action
+name: Build using docker V2
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -24,7 +24,9 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Create new react native project
-        run: npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
+        run: |
+          npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }} --skip-install
+          npm i
         
       - name: Make Gradlew Executable
         run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
