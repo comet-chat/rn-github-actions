@@ -25,8 +25,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Create new react native project
         run: |
-          npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }} --skip-install
-          npm i
+          npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
+          yarn add -D metro-react-native-babel-preset@^0.59
         
       - name: Make Gradlew Executable
         run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
