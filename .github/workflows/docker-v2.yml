@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rn_version: ['0.60.x', '0.61.x', '0.62.x']
+        rn_version: ['0.60.x']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,6 +27,7 @@ jobs:
         run: |
           npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
           yarn add -D metro-react-native-babel-preset@^0.59
+          cd $PROJECT_NAME && cat package.json
         
       - name: Make Gradlew Executable
         run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
