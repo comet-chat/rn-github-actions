@@ -1,4 +1,4 @@
-name: Build using docker V2
+name: Build using docker V3
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -24,14 +24,10 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Create new react native project
-        run: npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
+        run: |
+          npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }} --skip-install
+          cd $PROJECT_NAME && npm i
           
-      - name: Update metro-react-native-babel-preset
-        run: cd $PROJECT_NAME && yarn add -D metro-react-native-babel-preset@^0.59
-          
-      - name: Print package json
-        run: cd $PROJECT_NAME && cat package.json
-        
       - name: Make Gradlew Executable
         run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
         
