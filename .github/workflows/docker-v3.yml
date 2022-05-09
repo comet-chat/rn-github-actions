@@ -1,0 +1,46 @@
+name: Build using docker V2
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  PROJECT_NAME: RNGithubAction
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  android-build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    container: reactnativecommunity/react-native-android
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        rn_version: ['0.60.x', '0.61.x', '0.62.x']
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs a single command using the runners shell
+      - name: Create new react native project
+        run: npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
+          
+      - name: Update metro-react-native-babel-preset
+        run: cd $PROJECT_NAME && yarn add -D metro-react-native-babel-preset@^0.59
+          
+      - name: Print package json
+        run: cd $PROJECT_NAME && cat package.json
+        
+      - name: Make Gradlew Executable
+        run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
+        
+      - name: Generate App APK
+        run: cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          # Artifact name
+          name: 'build'
+          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
