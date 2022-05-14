@@ -43,4 +43,4 @@ jobs:
         with:
           # Artifact name
           name: 'build'
-          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
+          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release-${{ matrix.rn_version }}.apk'
