@@ -42,5 +42,5 @@ jobs:
         uses: actions/upload-artifact@v3.0.0
         with:
           # Artifact name
-          name: 'build'
-          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release-${{ matrix.rn_version }}.apk'
+          name: 'build-${{ matrix.rn_version }}'
+          path: 'RNGithubAction/android/app/build/outputs/apk/release/app-release.apk'
