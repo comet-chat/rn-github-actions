@@ -25,13 +25,13 @@ jobs:
       # Runs a single command using the runners shell
       - name: Create new react native project
         run: npx react-native init $PROJECT_NAME --version ${{ matrix.rn_version }}
-        
-      - name: Make Gradlew Executable
-        run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
       
       - name: Update metro-react-native-babel-preset
         if: ${{ matrix.rn_version < '0.63' }}
         run: cd $PROJECT_NAME && yarn add -D metro-react-native-babel-preset@^0.59
+        
+      - name: Make Gradlew Executable
+        run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
         
       - name: Generate App APK
         run: cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
