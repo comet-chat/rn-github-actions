@@ -1,4 +1,4 @@
-name: RN Github Action
+name: Docker
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -28,6 +28,10 @@ jobs:
         
       - name: Make Gradlew Executable
         run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
+      
+      - name: Update metro-react-native-babel-preset
+        if: ${{ matrix.rn_version < '0.63' }}
+        run: cd $PROJECT_NAME && yarn add -D metro-react-native-babel-preset@^0.59
         
       - name: Generate App APK
         run: cd $PROJECT_NAME && cd android && ./gradlew assembleRelease --no-daemon
