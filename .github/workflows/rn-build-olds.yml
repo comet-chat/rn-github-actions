@@ -47,7 +47,7 @@ jobs:
         
         # What is java version
       - name: Create new react native project
-        run: java --version
+        run: java -version
         
       - name: Make Gradlew Executable
         run: cd $PROJECT_NAME && cd android && chmod +x ./gradlew
